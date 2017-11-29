@@ -1,19 +1,16 @@
-import React from 'react';
-import { Menu, Icon } from 'antd';
+import React from "react";
+import { Menu, Icon } from "antd";
 
-const NavBar = ({handleClick, current}) => (
-    <Menu
-        onClick={handleClick}
-        selectedKeys={[current]}
-        mode="horizontal"
-      >
-        <Menu.Item key="mail">
-          <Icon type="mail" />Navigation One
-        </Menu.Item>
-        <Menu.Item key="app">
-          <Icon type="appstore" />Navigation Two
-        </Menu.Item>
-      </Menu>
-  );
+const NavBar = ({ handleClick, current, routes, children }) => (
+  <Menu onClick={handleClick} selectedKeys={[current]} mode="horizontal">
+    {routes.map(route => (
+      <Menu.Item key={route.path}>
+        <Icon type={route.icon} style={{ fontSize: 18 }} />
+        {route.title}
+      </Menu.Item>
+    ))}
+    {children}
+  </Menu>
+);
 
-  export default NavBar;
+export default NavBar;

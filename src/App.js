@@ -1,64 +1,74 @@
 import React, { Component } from "react";
-import { Layout, Menu, Icon, Card } from "antd";
+import { Layout } from "antd";
 import "./App.css";
 import routeConfigs from "./routes";
+import Router from "./router";
 
-const { Header, Footer, Content } = Layout;
+import NavBar from "./components/navbar";
+import LoginModal from "./components/login-modal";
+import AuthButton from "./components/auth-button";
 
-const TopMenu = props => (
-  <Menu
-    onClick={props.handleClick}
-    selectedKeys={[props.current]}
-    mode="horizontal"
-  >
-    {routeConfigs.routes.map(route => (
-      <Menu.Item key="mail">
-        <Icon type="mail" />
-        {route.name}
-      </Menu.Item>
-    ))}
-  </Menu>
-);
-
-const CardContent = () => (
-  <Card title="Card title" extra={<a href="">More</a>} style={{ width: 300 }}>
-    <img
-      alt="example"
-      width="100%"
-      src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png"
-    />
-    <p>Card content</p>
-    <p>Card content</p>
-    <p>Card content</p>
-  </Card>
-);
+const { Header, Content } = Layout;
 
 class App extends Component {
   state = {
-    current: "mail"
+    current: window.location.pathname,
+    isLoginModalOpen: false,
+    isAuth: false
   };
   handleClick = e => {
     console.log("click ", e);
+    console.log(this.state);
     this.setState({
       current: e.key
     });
   };
   render() {
     return (
-      <div className="App">
-        <Layout style={{ minHeight: "100vh" }}>
-          <Header>
-            <TopMenu
-              handleClick={this.handleClick}
-              current={this.state.current}
+      <Layout style={{ minHeight: "100vh" }}>
+        <Header>
+          <NavBar
+            handleClick={this.handleClick}
+            current={this.state.current}
+            routes={routeConfigs.routes}
+          >
+            <AuthButton
+              isAuth={this.state.isAuth}
+              handleClick={() => {
+                if (!this.state.isAuth) {
+                  this.setState({
+                    isLoginModalOpen: true
+                  });
+                } else {
+                  this.setState({
+                    isAuth: false
+                  });
+                }
+              }}
             />
-          </Header>
-          <Content style={{ padding: "0 10vh" }}>
-            <CardContent />
+            <LoginModal
+              visible={this.state.isLoginModalOpen}
+              handleLogin={() => {
+                this.setState({ isAuth: true, isLoginModalOpen: false });
+              }}
+              handleCancel={() => {
+                this.setState({ isLoginModalOpen: false });
+              }}
+            />
+          </NavBar>
+        </Header>
+        <Layout style={{ minHeight: "100vh" }}>
+          <Content style={{ padding: "10px 10vh" }}>
+            {this.state.isLoginModalOpen && <LoginModal />}
+            <Router
+              isAuth={false}
+              routes={routeConfigs.routes}
+              NoMatch={routeConfigs.NoMatch}
+              noAuth={routeConfigs.noAuthRedirect}
+            />
           </Content>
-          <Footer>Footer</Footer>
         </Layout>
-      </div>
+      </Layout>
     );
   }
 }
