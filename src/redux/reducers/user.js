@@ -3,14 +3,14 @@ import { actions, tokenStorageLabel } from "../../constants";
 const {
   LOGIN_SUCCESS,
   LOGIN_FAIL,
-  FETCH_ADMIN_FAIL,
-  FETCH_ADMIN_SUCCESS,
+  FETCH_USER_FAIL,
+  FETCH_USER_SUCCESS,
   LOGOUT_SUCCESS,
   LOGOUT_FAIL
 } = actions.user;
 
 const initialState = {
-  admin: {},
+  user: {},
   isLoggedIn: false,
   error: "",
   isLoading: false
@@ -33,11 +33,11 @@ export default (state = initialState, action) => {
     case LOGOUT_FAIL:
       // remove the token.
       return { ...state, isLoggedIn: true, error: payload.errorMessage };
-    case FETCH_ADMIN_SUCCESS:
-      return { ...state, admin: payload, isLoggedIn: true };
-    case FETCH_ADMIN_FAIL:
+    case FETCH_USER_SUCCESS:
+      return { ...state, user: payload, isLoggedIn: true };
+    case FETCH_USER_FAIL:
       localStorage.removeItem(tokenStorageLabel);
-      return { ...state, admin: {}, isLoggedIn: false };
+      return { ...state, user: {}, isLoggedIn: false };
     default:
       return state;
   }

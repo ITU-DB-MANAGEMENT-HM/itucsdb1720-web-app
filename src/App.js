@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { withRouter } from "react-router-dom";
 import { Layout } from "antd";
 import "./App.css";
 import routeConfigs from "./routes";
@@ -8,7 +9,7 @@ import NavBar from "./components/navbar";
 import LoginModal from "./components/login-modal";
 import AuthButton from "./components/auth-button";
 
-const { Header, Content } = Layout;
+const { Header, Content, Footer } = Layout;
 
 class App extends Component {
   state = {
@@ -19,6 +20,7 @@ class App extends Component {
   handleClick = e => {
     console.log("click ", e);
     console.log(this.state);
+    this.props.history.push(e.key);
     this.setState({
       current: e.key
     });
@@ -48,7 +50,8 @@ class App extends Component {
             />
             <LoginModal
               visible={this.state.isLoginModalOpen}
-              handleLogin={() => {
+              handleLogin={fields => {
+                console.log(fields);
                 this.setState({ isAuth: true, isLoginModalOpen: false });
               }}
               handleCancel={() => {
@@ -57,20 +60,22 @@ class App extends Component {
             />
           </NavBar>
         </Header>
-        <Layout style={{ minHeight: "100vh" }}>
-          <Content style={{ padding: "10px 10vh" }}>
-            {this.state.isLoginModalOpen && <LoginModal />}
-            <Router
-              isAuth={false}
-              routes={routeConfigs.routes}
-              NoMatch={routeConfigs.NoMatch}
-              noAuth={routeConfigs.noAuthRedirect}
-            />
-          </Content>
-        </Layout>
+
+        <Content style={{ padding: "5vh", textAlign: "center" }}>
+          {this.state.isLoginModalOpen && <LoginModal />}
+          <Router
+            isAuth={false}
+            routes={routeConfigs.routes}
+            NoMatch={routeConfigs.NoMatch}
+            noAuth={routeConfigs.noAuthRedirect}
+          />
+        </Content>
+        <Footer style={{ textAlign: "center" }}>
+          ITUNDER ©2017 Created by Hamzali&Sahin
+        </Footer>
       </Layout>
     );
   }
 }
 
-export default App;
+export default withRouter(App);

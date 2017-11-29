@@ -17,7 +17,13 @@ const Router = ({ isAuth, routes, NoMatch, noAuth, indexRoute }) => (
             isAuth={isAuth}
           />
         ) : (
-          <Route component={Component} path={path} key={key} isAuth={isAuth} />
+          <Route
+            exact
+            component={Component}
+            path={path}
+            key={key}
+            isAuth={isAuth}
+          />
         );
       }),
       <Route component={NoMatch} key={routes.length + 1} />
