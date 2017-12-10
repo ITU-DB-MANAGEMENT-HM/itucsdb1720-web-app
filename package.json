@@ -22,6 +22,6 @@
     "build": "react-app-rewired build",
     "test": "react-app-rewired test --env=jsdom",
     "eject": "react-scripts eject",
-    "deploy": "react-scripts build && aws s3 sync build/ s3://itucsdb2017"
+    "deploy": "react-app-rewired build && aws s3 sync build/ s3://itucsdb1720"
   }
 }
