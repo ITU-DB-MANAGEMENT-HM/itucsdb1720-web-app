@@ -20,8 +20,13 @@ export const actions = {
     FETCH: "FETCH_STUDENTS",
     FETCH_FAIL: "FETCH_FAIL_STUDENTS",
     FETCH_SUCCESS: "FETCH_SUCCESS_STUDENTS"
+  },
+  lecturers:{
+    FETCH: "FETCH_LECTURERS",
+    FETCH_FAIL: "FETCH_FAIL_LECTURERS",
+    FETCH_SUCCESS: "FETCH_SUCCESS_LECTURERS"
   }
 };
 
 export const tokenStorageLabel = "itunder-token";
-export const apiUrl = "http://";
+export const apiUrl = "https://itucsdb1720.herokuapp.com";
