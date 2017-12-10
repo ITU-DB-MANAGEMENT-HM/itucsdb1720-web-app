@@ -3,7 +3,7 @@ import { tokenStorageLabel, apiUrl } from "./constants";
 
 export const axios = _axios.create({
   baseURL: apiUrl,
-  timeout: 1000,
+  timeout: 15000,
   responseType: "json"
 });
 

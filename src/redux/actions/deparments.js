@@ -1,8 +1,7 @@
 import { actions } from "../../constants";
 
-const actionTypes = actions.lecturers;
+const actionTypes = actions.departments;
 
-export const getLect = (department) => ({
-    type: actionTypes.FETCH,
-    department
+export const getFaculties = () => ({
+    type: actionTypes.FETCH_FACULTIES,
 })

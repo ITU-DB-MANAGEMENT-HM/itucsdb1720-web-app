@@ -1,14 +1,36 @@
 import React from "react"
-import HomeworkItem from "../components/homeworks/homework-timeline"
-import {List} from 'antd'
-
-class Homework extends React.Component{
+import HomeworkCardGridView from "../components/homeworks/homework-cards"
+import {connect} from "react-redux"
+import {getHomeworks} from "../redux/actions/homeworks"
+import {Card} from "antd"
+class Homeworks extends React.Component{
+    componentDidMount()
+    {
+        this.props.dispatch(getHomeworks())
+    }
     render = () => (
     <div>
+    <Card
+        style={{ width: '95%' , textAlign:'center' }}
+        bodyStyle={{ padding: 0 }}
+        >
     {
-        <HomeworkItem />
+       
+        this.props.homeworks &&
+        this.props.homeworks.map(item => {
+            <div key = {item.objectID}>
+                item.name
+            </div>
+        })
+            
     }
+    </Card>
     </div>
 )
 }
-export default Homework;
+
+export default connect(store => {
+    return {
+        homeworks: store.homeworks
+    }
+})(Homeworks)

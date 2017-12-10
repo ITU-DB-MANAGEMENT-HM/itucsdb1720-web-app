@@ -35,6 +35,15 @@ export default {
       title: "Lecturers",
       isSystem: true
 
+    },
+    {
+      path: "/homeworks",
+      Component: Homeworks,
+      icon : "book",
+      isPrivate: false,
+      title: "Homeworks",
+      isSystem: true
+
     }
   ]
 };
