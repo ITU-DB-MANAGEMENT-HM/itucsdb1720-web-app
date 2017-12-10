@@ -6,6 +6,7 @@
     "antd": "^2.12.7",
     "axios": "^0.17.1",
     "babel-plugin-import": "^1.4.0",
+    "moment": "^2.19.3",
     "react": "^15.6.1",
     "react-app-rewire-less": "^2.0.5",
     "react-app-rewired": "^1.2.2",

@@ -24,7 +24,7 @@ export default function* loginFlow() {
       yield take(FETCH_USER);
 
       try {
-        const res = yield call(axios.get, "admins/me");
+        const res = yield call(axios.get, "/students");
         yield put({
           type: FETCH_USER_SUCCESS,
           payload: res.data
@@ -40,27 +40,34 @@ export default function* loginFlow() {
       const action = yield take(LOGIN);
       console.log("login action fired...");
       try {
-        const res = yield call(axios.post, "admins/login", {
-          username: action.username,
-          password: action.password
+        console.log(action)
+        const res = yield call(axios, {
+          url: "/auth",
+          method: "post",
+          data:{
+            username: action.username,
+            password: action.password,
+            pin: action.pin
+          }
         });
 
         yield put({
           type: LOGIN_SUCCESS,
-          payload: { token: res.data.id }
+          payload: { token: res.data.token }
         });
 
-        const resAdmin = yield call(axios.get, "admins/me");
+        const resUser = yield call(axios.get, "/students");
 
         isLoginFired = true;
 
         yield put({
           type: FETCH_USER_SUCCESS,
-          payload: resAdmin.data
+          payload: resUser.data
         });
 
         console.log("logged in successfully...");
       } catch (e) {
+        console.dir(e)
         const errorMessage = e.response
           ? e.response.data.error.message
           : "check internet connection!.";
@@ -77,7 +84,7 @@ export default function* loginFlow() {
 
     console.log("logout action fired...");
     try {
-      yield call(axios.post, "admins/logout");
+      yield call(axios.post, "/logout");
 
       isLoginFired = false;
 

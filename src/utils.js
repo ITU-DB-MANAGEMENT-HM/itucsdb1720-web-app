@@ -3,14 +3,14 @@ import { tokenStorageLabel, apiUrl } from "./constants";
 
 export const axios = _axios.create({
   baseURL: apiUrl,
-  timeout: 1000,
+  timeout: 10000,
   responseType: "json"
 });
 
 axios.interceptors.request.use(
   config => {
     // Do something before request is sent
-    config.headers.Authorization = localStorage.getItem(tokenStorageLabel);
+    config.headers.token = localStorage.getItem(tokenStorageLabel);
     return config;
   },
   error =>
@@ -22,6 +22,7 @@ export const reducerFactory = (initialState, reducerMethods, apis) => {
   const actionReducers = reducerMethods || {};
   apis &&
     apis.forEach(api => {
+      console.log(api)
       actionReducers[api.success] = api.successMethod;
       actionReducers[api.fail] = api.failMethod;
     });

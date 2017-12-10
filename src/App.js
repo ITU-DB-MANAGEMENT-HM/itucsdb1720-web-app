@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import { Layout } from "antd";
+
+import {connect} from "react-redux"
+import {login, logout, fetchUser} from "./redux/actions/student"
 import "./App.css";
 import routeConfigs from "./routes";
 import Router from "./router";
@@ -15,8 +18,10 @@ class App extends Component {
   state = {
     current: window.location.pathname,
     isLoginModalOpen: false,
-    isAuth: false
   };
+  componentDidMount () {
+    this.props.dispatch(fetchUser());
+  }
   handleClick = e => {
     console.log("click ", e);
     console.log(this.state);
@@ -26,6 +31,7 @@ class App extends Component {
     });
   };
   render() {
+    console.log(this.props)
     return (
       <Layout style={{ minHeight: "100vh" }}>
         <Header>
@@ -35,16 +41,14 @@ class App extends Component {
             routes={routeConfigs.routes}
           >
             <AuthButton
-              isAuth={this.state.isAuth}
+              isAuth={this.props.isLoggedIn}
               handleClick={() => {
-                if (!this.state.isAuth) {
+                if (!this.props.isLoggedIn) {
                   this.setState({
                     isLoginModalOpen: true
                   });
                 } else {
-                  this.setState({
-                    isAuth: false
-                  });
+                  this.props.dispatch(logout());
                 }
               }}
             />
@@ -52,7 +56,9 @@ class App extends Component {
               visible={this.state.isLoginModalOpen}
               handleLogin={fields => {
                 console.log(fields);
-                this.setState({ isAuth: true, isLoginModalOpen: false });
+                this.setState({isLoginModalOpen: false });
+                console.log(fields)
+                this.props.dispatch(login(fields.username, fields.password, fields.pin))
               }}
               handleCancel={() => {
                 this.setState({ isLoginModalOpen: false });
@@ -78,4 +84,7 @@ class App extends Component {
   }
 }
 
+App = connect(store => {
+  return {isLoggedIn: store.student.isLoggedIn}
+})(App)
 export default withRouter(App);
