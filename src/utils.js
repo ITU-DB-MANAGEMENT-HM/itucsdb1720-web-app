@@ -9,8 +9,8 @@ export const axios = _axios.create({
 
 axios.interceptors.request.use(
   config => {
-    // TODO
-    config.headers.token = "9A5D5BD56BA74DB484F86D07554C637FA4B803B3A196435B8AB5AF723F24DE50";
+    // Do something before request is sent
+    config.headers.token = localStorage.getItem(tokenStorageLabel);
     return config;
   },
   error =>
@@ -18,13 +18,23 @@ axios.interceptors.request.use(
     Promise.reject(error)
 );
 
+const endOfApi = (method, name) => (state, payload) => method({...state, apiIsLoading: {...state.apiIsLoading, [name]: false}}, payload);
+
 export const reducerFactory = (initialState, reducerMethods, apis) => {
+  initialState = {...initialState, apiErrors: {}, apiIsLoading: {}}
   const actionReducers = reducerMethods || {};
   apis &&
-    apis.forEach(api => {
-      actionReducers[api.success] = api.successMethod;
-      actionReducers[api.fail] = api.failMethod;
+    apis.forEach(api => { 
+      initialState.apiIsLoading[api.name] = false;
+      initialState.apiErrors[api.name] = "";
+      actionReducers[api.trigger] = (state, payload) => {
+        return {...state, apiIsLoading: {...state.apiIsLoading, [api.name]: true}}
+      };
+      
+      actionReducers[api.success] = endOfApi(api.successMethod, api.name);
+      actionReducers[api.fail] = endOfApi(api.failMethod, api.name);
     });
+
   return (state = initialState, action) => {
     const { type, payload } = action;
 

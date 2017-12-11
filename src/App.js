@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import { Layout } from "antd";
+
+import {connect} from "react-redux"
+import {login, logout, fetchUser} from "./redux/actions/student"
 import "./App.css";
 import routeConfigs from "./routes";
 import Router from "./router";
@@ -15,11 +18,11 @@ class App extends Component {
   state = {
     current: window.location.pathname,
     isLoginModalOpen: false,
-    isAuth: false
   };
+  componentDidMount () {
+    this.props.dispatch(fetchUser());
+  }
   handleClick = e => {
-    console.log("click ", e);
-    console.log(this.state);
     this.props.history.push(e.key);
     this.setState({
       current: e.key
@@ -35,24 +38,23 @@ class App extends Component {
             routes={routeConfigs.routes}
           >
             <AuthButton
-              isAuth={this.state.isAuth}
+              isAuth={this.props.isLoggedIn}
+              isLoading={this.props.loginIsLoading}
               handleClick={() => {
-                if (!this.state.isAuth) {
+                if (!this.props.isLoggedIn) {
                   this.setState({
                     isLoginModalOpen: true
                   });
                 } else {
-                  this.setState({
-                    isAuth: false
-                  });
+                  this.props.dispatch(logout());
                 }
               }}
             />
             <LoginModal
               visible={this.state.isLoginModalOpen}
               handleLogin={fields => {
-                console.log(fields);
-                this.setState({ isAuth: true, isLoginModalOpen: false });
+                this.setState({isLoginModalOpen: false });
+                this.props.dispatch(login(fields.username, fields.password, fields.pin))
               }}
               handleCancel={() => {
                 this.setState({ isLoginModalOpen: false });
@@ -78,4 +80,7 @@ class App extends Component {
   }
 }
 
+App = connect(store => {
+  return {isLoggedIn: store.student.isLoggedIn, loginIsLoading: store.student.loginIsLoading}
+})(App)
 export default withRouter(App);
