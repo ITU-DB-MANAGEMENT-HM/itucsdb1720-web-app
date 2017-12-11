@@ -43,4 +43,4 @@ export const actions = {
 };
 
 export const tokenStorageLabel = "itunder-token";
-export const apiUrl = "https://cc04e6b6.ngrok.io";
+export const apiUrl = "http://67256da8.ngrok.io/";

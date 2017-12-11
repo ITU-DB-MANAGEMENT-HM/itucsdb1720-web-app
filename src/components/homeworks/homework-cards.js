@@ -24,9 +24,10 @@ class HomeworkCardGridView extends Component{
     </div>
     {/* THIS PROPS DEGISECEK */}
     <div className="hw-card">
-        <h3>{this.props.name}</h3> 
-        <p>{this.props.course}</p>
-        <p>{this.props.deadline}</p>
+        <h3>{data.description}</h3> 
+        <p> CRN: {data.crn} </p>
+        <p>{data.homework_id}</p>
+        <p>{data.deadline}</p>
         <div style={{ margin: "auto", textAlign: "center" }}>
         <Button
           shape="circle"
@@ -34,7 +35,7 @@ class HomeworkCardGridView extends Component{
           icon="check"
           size="large"
           style={{ backgroundColor: "green", borderColor: "green", margin: 10 }}
-          onClick={this.props.onClick}
+          onClick={data.onClick}
         />
         <Button
           shape="circle"
@@ -42,7 +43,7 @@ class HomeworkCardGridView extends Component{
           icon="close"
           size="large"
           style={{ backgroundColor: "red", borderColor: "red", margin: 10 }}
-          onClick={this.props.onClick}
+          onClick={data.onClick}
         />
       </div>
     </div>

@@ -29,8 +29,6 @@ class Departments extends React.Component {
                 {item.name}
                 </div>
             ))
-          
-            
             
             
             }
