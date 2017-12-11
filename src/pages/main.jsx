@@ -1,12 +1,13 @@
 import React from "react";
 import {connect} from "react-redux"
-import {fetchStudentCourses}  from "../redux/actions/student"
-import {Card, Button, DatePicker} from "antd"
-import moment from "moment"
+import {fetchStudentCourses, updateStudentDate, searchCourses}  from "../redux/actions/student"
+import {Card, Button, Spin} from "antd"
+
+import ProfileCard from "../components/profile-card"
 
 class MainPage extends React.Component {
   state = {
-    isCourseModalOpen: false
+    
   }
   componentDidMount () {
     this.props.dispatch(fetchStudentCourses());
@@ -15,32 +16,13 @@ class MainPage extends React.Component {
     if (!this.props.isLoggedIn) {
       return <div>Please log in!</div> 
     }
-    const {user} = this.props;
+    const {user, fetchStudentIsLoading, updateStudentIsLoading, courses, searchCoursesData} = this.props;
     return <div>
-       <Card title={user.username}  style={{ width: 500 }}>
-          <p><strong>ITU id: </strong>{user.id}</p>
-          <p><strong>Name: </strong>{user.name}</p>
-          <p><strong>Email: </strong>{user.email}</p>
-
-          <DatePicker.RangePicker
-            style={{margin: "20px"}}
-            ranges={{ Today: [moment(), moment()], 'This Month': [moment(), moment().endOf('month')] }}
-            showTime
-            format="YYYY/MM/DD HH:mm:ss"
-            onChange={(dates) => {
-              console.log(dates);
-            }}/>
-
-          <hr/>
-          <h2>Courses</h2>
-          {
-            this.props.courses && this.props.courses.map((elem, key) => <p key={"key" + key}>
-              {elem.course}
-              <Button size={"small"} type="danger" ghost style={{margin: "20px"}}>Remove</Button>
-            </p>)
-          }
-          <Button>Add Course</Button>
-        </Card>
+      <ProfileCard user={user} courses={courses} searchCourses={searchCoursesData}
+        fetchStudentIsLoading={fetchStudentIsLoading} 
+        updateStudentIsLoading={updateStudentIsLoading}
+        handleDateUpdate={(study_start, study_end) => {this.props.dispatch(updateStudentDate(study_start, study_end))}}
+        handleSearchCourse={value => this.props.dispatch(searchCourses(value))}/>
     </div>
   }
 }
@@ -48,8 +30,13 @@ class MainPage extends React.Component {
 
 export default connect(store => {
   return {
+    // User
     user: store.student.user,
     isLoggedIn: store.student.isLoggedIn,
+    fetchStudentIsLoading: store.student.fetchStudentIsLoading,
+    updateStudentIsLoading: store.student.apiIsLoading.updateStudent,
+    // Course
     courses: store.student.courses,
+    searchCoursesData: store.student.searchCourses
   }
 })(MainPage) 

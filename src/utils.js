@@ -18,14 +18,23 @@ axios.interceptors.request.use(
     Promise.reject(error)
 );
 
+const endOfApi = (method, name) => (state, payload) => method({...state, apiIsLoading: {...state.apiIsLoading, [name]: false}}, payload);
+
 export const reducerFactory = (initialState, reducerMethods, apis) => {
+  initialState = {...initialState, apiErrors: {}, apiIsLoading: {}}
   const actionReducers = reducerMethods || {};
   apis &&
-    apis.forEach(api => {
-      console.log(api)
-      actionReducers[api.success] = api.successMethod;
-      actionReducers[api.fail] = api.failMethod;
+    apis.forEach(api => { 
+      initialState.apiIsLoading[api.name] = false;
+      initialState.apiErrors[api.name] = "";
+      actionReducers[api.trigger] = (state, payload) => {
+        return {...state, apiIsLoading: {...state.apiIsLoading, [api.name]: true}}
+      };
+      
+      actionReducers[api.success] = endOfApi(api.successMethod, api.name);
+      actionReducers[api.fail] = endOfApi(api.failMethod, api.name);
     });
+
   return (state = initialState, action) => {
     const { type, payload } = action;
 

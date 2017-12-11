@@ -23,10 +23,14 @@ export const actions = {
 
     UPDATE_STUDENT: "UPDATE_STUDENT",
     UPDATE_STUDENT_FAIL: "UPDATE_STUDENT_FAIL",
-    UPDATE_STUDENT_SUCCESS: "UPDATE_STUDENT_SUCCESS"
+    UPDATE_STUDENT_SUCCESS: "UPDATE_STUDENT_SUCCESS",
+
+    SEARCH_COURSES: "SEARCH_COURSES",
+    SEARCH_COURSES_FAIL: "SEARCH_COURSES_FAIL",
+    SEARCH_COURSES_SUCCESS: "SEARCH_COURSES_SUCCESS",
 
   }
 };
 
 export const tokenStorageLabel = "itunder-token";
-export const apiUrl = "https://cc04e6b6.ngrok.io";
+export const apiUrl = "https://64143601.ngrok.io";

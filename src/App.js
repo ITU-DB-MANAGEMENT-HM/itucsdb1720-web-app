@@ -23,15 +23,12 @@ class App extends Component {
     this.props.dispatch(fetchUser());
   }
   handleClick = e => {
-    console.log("click ", e);
-    console.log(this.state);
     this.props.history.push(e.key);
     this.setState({
       current: e.key
     });
   };
   render() {
-    console.log(this.props)
     return (
       <Layout style={{ minHeight: "100vh" }}>
         <Header>
@@ -42,6 +39,7 @@ class App extends Component {
           >
             <AuthButton
               isAuth={this.props.isLoggedIn}
+              isLoading={this.props.loginIsLoading}
               handleClick={() => {
                 if (!this.props.isLoggedIn) {
                   this.setState({
@@ -55,9 +53,7 @@ class App extends Component {
             <LoginModal
               visible={this.state.isLoginModalOpen}
               handleLogin={fields => {
-                console.log(fields);
                 this.setState({isLoginModalOpen: false });
-                console.log(fields)
                 this.props.dispatch(login(fields.username, fields.password, fields.pin))
               }}
               handleCancel={() => {
@@ -85,6 +81,6 @@ class App extends Component {
 }
 
 App = connect(store => {
-  return {isLoggedIn: store.student.isLoggedIn}
+  return {isLoggedIn: store.student.isLoggedIn, loginIsLoading: store.student.loginIsLoading}
 })(App)
 export default withRouter(App);
