@@ -4,7 +4,7 @@ import {connect} from "react-redux"
 import {getHomeworks} from "../redux/actions/homeworks"
 import {Card, Button} from "antd"
 import HomeworkModal from "../components/homework-modal"
-
+import { Link } from 'react-router-dom'
 class Homeworks extends React.Component{
     state = {
         homeworks: [],
@@ -19,17 +19,22 @@ class Homeworks extends React.Component{
       
         <div>
             <Card>
+            
+
             {
+                
             this.props.homeworks && 
             this.props.homeworks.map(item => (
                 <div key = {item.objectID}>
                 <HomeworkCardGridView data={{...item}} />
+                
                 </div>
             ))
           
             
-            
             }
+            
+
 
         </Card>
         <HomeworkModal

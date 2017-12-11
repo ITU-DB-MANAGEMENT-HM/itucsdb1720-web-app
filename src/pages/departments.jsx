@@ -1,7 +1,9 @@
 import React from "react";
-import DepartmentCardView from "../components/departments/department-cards"
+import DepartmentCardGridView from "../components/departments/department-cards"
 import {connect} from "react-redux"
 import {getFaculties} from "../redux/actions/deparments"
+import {Card} from "antd"
+import {Link} from "react-router-dom"
 const gridStyle = {
     width: '25%',
     textAlign: 'center',
@@ -20,20 +22,18 @@ class Departments extends React.Component {
     render = () => (
         
         <div>
-            
+            <Card>
             {
-            
             this.props.faculties && 
             this.props.faculties.map(item => (
                 <div key = {item.objectID}>
-                {item.name}
+                
+                <DepartmentCardGridView data={item}/>
+                
                 </div>
-            ))
-            
-            
+            ))            
             }
-            {/* <DepartmentCardView /> */}
-
+            </Card>
         </div>
         
         
