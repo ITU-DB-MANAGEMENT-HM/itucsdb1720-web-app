@@ -32,7 +32,19 @@ const api = {
       failMethod: (state, payload) =>{
         return {...state, fetchError: "Network problem", faculties: []};
       }
-
+    },
+    {
+      method: "get",
+      endpoint: "api/lecturers",
+      trigger: departments.FETCH_LECTURERS,
+      success: departments.FETCH_LECTURERS_SUCCESS,
+      fail: departments.FETCH_LECTURERS_FAIL,
+      successMethod: (state, payload) => {
+        return {...state, faculties: [], lecturers: payload.data}
+      },
+      failMethod: (state, payload) => {
+        return{...state, lecturers:[], fetchError: "Network err"}
+      }
     }
   ],
 
@@ -50,6 +62,32 @@ const api = {
   failMethod: (state, payload) => {
     return {...state, homeworks:[], fetchError: "Network problem"}
   }
+  },
+  {
+    method: "post",
+    endpoint: "api/homeworks",
+    trigger: homeworks.ADD_HOMEWORK,
+    success: homeworks.ADD_HOMEWORK_SUCCESS,
+    fail: homeworks.ADD_HOMEWORK_FAIL,
+    successMethod: (state, payload) => {
+      return {...state, homeworks: payload.data, fetchError: ""}
+    },
+    failMethod: (state, payload) => {
+      return {...state, fetchError: "Network problem"}
+    }
+  },
+  {
+    method: "delete",
+    endpoint: "api/homeworks",
+    trigger: homeworks.DELETE_HOMEWORK,
+    success: homeworks.DELETE_HOMEWORK_SUCCESS,
+    fail: homeworks.DELETE_HOMEWORK_FAIL,
+    successMethod: (state, payload) => {
+      return {...state, homeworks: payload.data, fetchError: ""}
+    },
+    failMethod: (state, payload) => {
+      return {...state, fetchError: "Network  problem"}
+    }
   }
   ]
 };

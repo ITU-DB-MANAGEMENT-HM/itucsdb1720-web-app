@@ -21,7 +21,7 @@ class DepartmentCardGridView extends Component{
     
     onClick={data.redirect}>
     <div className="test-card">
-        <h4>{data.id}</h4>
+        <h4>{data.name}</h4>
     </div>
     <div className="department-icon">
         <img

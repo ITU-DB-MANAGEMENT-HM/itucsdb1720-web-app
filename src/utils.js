@@ -9,8 +9,8 @@ export const axios = _axios.create({
 
 axios.interceptors.request.use(
   config => {
-    // Do something before request is sent
-    config.headers.Authorization = localStorage.getItem(tokenStorageLabel);
+    // TODO
+    config.headers.token = "9A5D5BD56BA74DB484F86D07554C637FA4B803B3A196435B8AB5AF723F24DE50";
     return config;
   },
   error =>

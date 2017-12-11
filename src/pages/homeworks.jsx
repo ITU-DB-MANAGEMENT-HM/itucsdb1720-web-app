@@ -2,9 +2,15 @@ import React from "react"
 import HomeworkCardGridView from "../components/homeworks/homework-cards"
 import {connect} from "react-redux"
 import {getHomeworks} from "../redux/actions/homeworks"
+import {addHomework} from "../redux/actions/homeworks"
+import {removeHomework} from "../redux/actions/homeworks"
 import {Card, Button} from "antd"
 import HomeworkModal from "../components/homework-modal"
-import { Link } from 'react-router-dom'
+
+import { actions } from "../constants";
+// Soru: neden add fonksiyonu import olmuyor :(
+const actionTypes = actions.homeworks;
+
 class Homeworks extends React.Component{
     state = {
         homeworks: [],
@@ -22,25 +28,28 @@ class Homeworks extends React.Component{
             
 
             {
-                
+            // TODO BUG BOS GIDIYOR
             this.props.homeworks && 
             this.props.homeworks.map(item => (
                 <div key = {item.objectID}>
-                <HomeworkCardGridView data={{...item}} />
+                <HomeworkCardGridView data={{...item, 
+                onClick: () => this.props.dispatch(removeHomework(item.homework_id))}} 
+                 />
                 
                 </div>
             ))
           
             
             }
-            
-
 
         </Card>
         <HomeworkModal
             visible ={this.state.isAddOpen}
             handleClick={fields => {
+                this.props.dispatch(addHomework(fields))
+                console.log(fields)
                 this.setState({isAddOpen: false})
+        
             }}
             handleCancel={() => {this.setState({isAddOpen: false})}}
         />
