@@ -2,6 +2,8 @@ export const errors = {};
 
 export const DATE_FORMAT = "MMM Do YY";
 
+export const tokenStorageLabel = "itu-token"
+
 export const actions = {
   user: {
     LOGIN: "USER_LOGIN",
