@@ -89,4 +89,4 @@ class LecturerModal extends Component {
   }
 };
 
-export default Form.create()(LecturerModal);
+export default Form.create()(LecturerModal)

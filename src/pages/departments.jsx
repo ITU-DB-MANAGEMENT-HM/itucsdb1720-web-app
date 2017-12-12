@@ -5,7 +5,7 @@ import {connect} from "react-redux"
 import {getFaculties, getLecturers, removeLecturer, addLecturer} from "../redux/actions/deparments"
 import {Card, Icon} from "antd"
 import { Button } from "antd/lib/radio";
-import {LecturerModal} from "../components/homework-modal"
+import LecturerModal from "../components/lecturer-modal"
 import { actions } from "../constants";
 
 const actionTypes = actions.departments;
@@ -43,7 +43,8 @@ class Departments extends React.Component {
         isClicked: false,
         isModalOpen: false,
         lecturers: [],
-        departments: []
+        departments: [],
+        openDepartment: -1
     }
     
 
@@ -56,12 +57,13 @@ class Departments extends React.Component {
     render = () => (
         
         
-        <div>
+        <div>{ this.state.openDepartment !== -1 &&
         <Button onClick={()=>this.setState({isModalOpen: true})} 
         size={"large"}
         >
         Add new lecturer
-        </Button>       
+        </Button>
+    }
          <Card>   
 
             {
@@ -72,7 +74,8 @@ class Departments extends React.Component {
                 <div key = {item.objectID}>
                 
                 <DepartmentCardGridView data={{...item,
-                    onClick: () => this.props.dispatch(getLecturers(item.id))}}
+                    onClick: () => {this.setState({openDepartment: item.id})
+                        this.props.dispatch(getLecturers(item.id))}}}
                 />
                 
                 </div>
@@ -80,12 +83,22 @@ class Departments extends React.Component {
 
             }
             </Card>
+            <LecturerModal
+                visible={this.state.isModalOpen}
+                handleClick={fields => {
+                    this.props.dispatch(addLecturer({...fields, department_id: this.state.openDepartment}))
+                    console.log(this.state.openDepartment)
+                    this.setState({isModalOpen: false})
+                }}
+                handleCancel={() => {this.setState({isModalOpen: false})}}
+            />
             {     
-                this.state.isClicked &&
                 <Table onRowClick={(item)=>this.props.dispatch(removeLecturer(item))} columns={columns} dataSource={this.props.lecturers}/>
             }
             
-            {<Button onClick={() => this.props.dispatch(getFaculties())}>Go Back </Button>}
+            { <Button onClick={() => {this.props.dispatch(getFaculties())
+                                     this.setState({openDepartment: -1}) 
+                                     }}>Go Back </Button>}
         
     </div>
 

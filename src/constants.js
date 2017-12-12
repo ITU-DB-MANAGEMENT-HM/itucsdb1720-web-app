@@ -71,4 +71,4 @@ export const actions = {
   }
 };
 
-export const apiUrl = "http://d762f497.ngrok.io/";
+export const apiUrl = "http://22a39c3c.ngrok.io/";

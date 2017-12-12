@@ -105,7 +105,7 @@ const api = {
       success: departments.ADD_LECTURER_SUCCESS,
       fail: departments.DELETE_LECTURER_FAIL,
       successMethod: (state, payload) => {
-        return {...state, lecturers:payload.data}
+        return {...state}
       },
       failMethod: (state, payload) => {
         return {...state, fetchError: "Network problem"}
