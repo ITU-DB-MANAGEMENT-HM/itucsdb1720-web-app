@@ -8,7 +8,6 @@ import {Card, Button} from "antd"
 import HomeworkModal from "../components/homework-modal"
 
 import { actions } from "../constants";
-// Soru: neden add fonksiyonu import olmuyor :(
 const actionTypes = actions.homeworks;
 
 class Homeworks extends React.Component{
@@ -33,7 +32,7 @@ class Homeworks extends React.Component{
             this.props.homeworks.map(item => (
                 <div key = {item.objectID}>
                 <HomeworkCardGridView data={{...item, 
-                onClick: () => this.props.dispatch(removeHomework(item.homework_id))}} 
+                onClick: () => this.props.dispatch(removeHomework(item) )}} 
                  />
                 
                 </div>

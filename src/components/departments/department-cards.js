@@ -16,10 +16,10 @@ class DepartmentCardGridView extends Component{
     render(){
         const {data} = this.props;
         return(
-    <Link to={'/lecturers/' + (data.id)}>
+
     <Card.Grid style={gridStyle}
     
-    onClick={data.redirect}>
+    onClick={data.onClick}>
     <div className="test-card">
         <h4>{data.name}</h4>
     </div>
@@ -31,7 +31,7 @@ class DepartmentCardGridView extends Component{
     />
     </div>
     </Card.Grid>
-    </Link>
+
 );}
 };
 

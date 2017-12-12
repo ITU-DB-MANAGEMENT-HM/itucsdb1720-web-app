@@ -1,6 +1,6 @@
 import { actions } from "../constants";
 
-const { students, departments, homeworks } = actions;
+const { students, departments, homeworks, chatgroups} = actions;
 
 const api = {
   students: [
@@ -66,7 +66,7 @@ const api = {
       success: departments.FETCH_FACULTIES_SUCCESS,
       fail: departments.FETCH_FACULTIES_FAIL,
       successMethod: (state, payload) => {
-        return {...state, faculties: payload.data, fetchError: ""};
+        return {...state, lecturers:[], faculties: payload.data, fetchError: "", isClicked: false};
       },
       failMethod: (state, payload) =>{
         return {...state, fetchError: "Network problem", faculties: []};
@@ -79,10 +79,36 @@ const api = {
       success: departments.FETCH_LECTURERS_SUCCESS,
       fail: departments.FETCH_LECTURERS_FAIL,
       successMethod: (state, payload) => {
-        return {...state, faculties: [], lecturers: payload.data}
+        return {...state, faculties: [], lecturers: payload.data, isClicked: true}
       },
       failMethod: (state, payload) => {
         return{...state, lecturers:[], fetchError: "Network err"}
+      }
+    },
+    {
+      method: "delete",
+      endpoint: "api/lecturers",
+      trigger: departments.DELETE_LECTURER,
+      success: departments.DELETE_LECTURER_SUCCESS,
+      fail: departments.DELETE_LECTURER_FAIL,
+      successMethod: (state, payload) => {
+        return {...state, lecturers: payload.data}
+      },
+      failMethod: (state, payload) => {
+        return {...state, fetchError: "Network error"}
+      }
+    },
+    {
+      method: "post",
+      endpoint: "api/lecturers",
+      trigger: departments.ADD_LECTURER,
+      success: departments.ADD_LECTURER_SUCCESS,
+      fail: departments.DELETE_LECTURER_FAIL,
+      successMethod: (state, payload) => {
+        return {...state, lecturers:payload.data}
+      },
+      failMethod: (state, payload) => {
+        return {...state, fetchError: "Network problem"}
       }
     }
   ],
@@ -128,7 +154,21 @@ const api = {
       return {...state, fetchError: "Network  problem"}
     }
   }
-  ]
+  ],
+  chatgroups:[{
+    method: "get",
+    endpoint: "api/chatgroups",
+    trigger: chatgroups.FETCH_CHATGROUPS,
+    success: chatgroups.FETCH_CHATGROUPS_SUCCESS,
+    fail: chatgroups.FETCH_CHATGROUPS_FAIL,
+    successMethod: (state, payload) => {
+      return {...state, chatgroups: payload.data}
+    },
+    failMethod: (state, payload) =>{
+      return {...state, fetchError: "network problem"}
+    }
+  }
+]
 };
 
 export default api;

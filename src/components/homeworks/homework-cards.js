@@ -26,7 +26,7 @@ class HomeworkCardGridView extends Component{
     <div className="hw-card">
         <h3>{data.description}</h3> 
         <p> CRN: {data.crn} </p>
-        <p>{data.homework_id}</p>
+        <p>{data.name}</p>
         <p>{data.deadline}</p>
         <div style={{ margin: "auto", textAlign: "center" }}>
         <Button
