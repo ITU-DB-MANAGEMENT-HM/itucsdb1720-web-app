@@ -2,7 +2,9 @@ import {reducerFactory} from "../../utils"
 import api from "../api"
 
 const initialState = {
-    chatgroups: []
+    chatgroups: [],
+    chatgroup_members: [],
+    isClicked: false
 };
 const actionReducers = {};
 

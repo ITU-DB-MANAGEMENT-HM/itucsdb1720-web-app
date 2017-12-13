@@ -7,8 +7,7 @@ import {removeHomework} from "../redux/actions/homeworks"
 import {Card, Button} from "antd"
 import HomeworkModal from "../components/homework-modal"
 
-import { actions } from "../constants";
-const actionTypes = actions.homeworks;
+
 
 class Homeworks extends React.Component{
     state = {

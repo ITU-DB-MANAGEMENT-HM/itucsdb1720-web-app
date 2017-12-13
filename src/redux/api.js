@@ -155,7 +155,8 @@ const api = {
     }
   }
   ],
-  chatgroups:[{
+  chatgroups:[
+    {
     method: "get",
     endpoint: "api/chatgroups",
     trigger: chatgroups.FETCH_CHATGROUPS,
@@ -167,7 +168,35 @@ const api = {
     failMethod: (state, payload) =>{
       return {...state, fetchError: "network problem"}
     }
+  },
+  {
+    // BIG TODO 
+    method: "get",
+    endpoint: "api/chatgroups/46",
+    trigger: chatgroups.FETCH_CHATGROUP_MEMBERS,
+    success: chatgroups.FETCH_CHATGROUP_MEMBERS_SUCCESS,
+    fail: chatgroups.FETCH_CHATGROUP_MEMBERS_FAIL,
+    successMethod: (state, payload) => {
+      return {...state, chatgroup_members: payload.data, isClicked: true}
+    },
+    failMethod: (state, payload) => {
+      return {...state, fetchError: "Network Error"}
+    }
+  },
+  {
+    method: "post",
+    endpoint: "api/chatgroups",
+    trigger: chatgroups.CREATE_CHATGROUP,
+    success: chatgroups.CREATE_CHATGROUP_SUCCESS,
+    fail: chatgroups.CREATE_CHATGROUP_FAIL,
+    successMethod : (state, payload) => {
+      return {...state, chatgroups: payload.data}
+    },
+    failMethod: (state, payload) => {
+      return {...state, fetchError: "Network err"}
+    }
   }
+  
 ]
 };
 

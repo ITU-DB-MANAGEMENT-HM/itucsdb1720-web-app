@@ -45,6 +45,14 @@ export default {
       title: "Homeworks",
       isSystem: true
 
+    },
+    {
+      path: "/chatgroups",
+      Component: Chatgroups,
+      icon: "message",
+      isPrivate: false,
+      title: "Chatgroups",
+      isSystem: true
     }
     
 

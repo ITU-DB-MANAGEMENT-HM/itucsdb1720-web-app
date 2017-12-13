@@ -23,7 +23,7 @@ export const removeLecturer = (item) => {
                 "dep": item.department_id
             },
             data:{
-                id: item.id
+                "id": item.id
             }
         }
     }
