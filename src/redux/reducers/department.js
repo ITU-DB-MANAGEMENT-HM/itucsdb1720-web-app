@@ -1,12 +1,10 @@
-
 import {reducerFactory} from "../../utils"
 import api from "../api"
 
 const initialState = {
     isClicked: false,
     lecturers: [],
-    faculties: [],
-    isLoading: false
+    faculties: []
 };
 const actionReducers = {};
 

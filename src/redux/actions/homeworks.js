@@ -10,16 +10,20 @@ export const addHomework = (fields) => ({
 
 })
 
-export const removeHomework = (fields) => (
-    {
-    type: actionTypes.DELETE_HOMEWORK,
-    payload: {
-        data: fields 
-    }
-})
 
 
 export const getHomeworks = () => ({
     type: actionTypes.FETCH_HOMEWORKS
 })
 
+export const removeHomework = (fields) => {
+    console.log(fields.homework_id)
+    return {
+        type: actionTypes.DELETE_HOMEWORK, 
+        payload: {
+            data: {
+                    fields
+            }
+        }
+    }
+};

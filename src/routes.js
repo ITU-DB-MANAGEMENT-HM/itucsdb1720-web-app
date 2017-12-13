@@ -6,6 +6,7 @@ import Main from "./pages/main";
 import StudyGroups from "./pages/study-groups";
 import Departments from "./pages/departments"
 import Homeworks from './pages/homeworks'
+import Chatgroups from './pages/chatgroups'
 export default {
   noAuthRedirect: null,
   NoMatch,
@@ -47,11 +48,11 @@ export default {
     },
     {
       path: "/chatgroups",
-      Component: Homeworks,
-      icon: "contacts",
+      Component: Chatgroups,
+      icon: "message",
       isPrivate: false,
       title: "Chatgroups",
-      isSystem: false
+      isSystem: true
     }
     
 
