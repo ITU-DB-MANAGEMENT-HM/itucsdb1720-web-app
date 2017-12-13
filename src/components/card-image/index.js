@@ -5,8 +5,8 @@ import PropTypes from "prop-types";
 import "./index.css";
 const CardImageView = props => (
   <Card
-    style={{ width: 250, display: "inline-block" }}
-    bodyStyle={{ padding: 0 }}
+    style={{ width: 250, display: "inline-block", margin: 5 }}
+    bodyStyle={{ padding: 5 }}
   >
     <div className="custom-image">
       <img

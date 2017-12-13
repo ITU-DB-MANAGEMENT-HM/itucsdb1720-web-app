@@ -55,8 +55,44 @@ const api = {
       failMethod: (state, payload) => {
         return { ...state, apiErrors: {...state.apiErrors, searchCourses: "Check Your Connection!"} };
       }
+    },
+    {
+      name: "deleteCourse",
+      method: "delete",
+      endpoint: "students/courses/{id}",
+      trigger: students.DELETE_COURSE,
+      success: students.DELETE_COURSE_SUCCESS,
+      fail: students.DELETE_COURSE_FAIL,
+      successMethod: (state, payload) => {
+        let key = 0;
+        for(const c in state.courses) {
+          if (c.crn === payload.data.crn) break;
+          key++;
+        }
+        return { 
+          ...state, courses: [...state.courses.slice(0, key - 1), ...state.courses.slice(key, state.courses.length)]
+        };
+      },
+      failMethod: (state, payload) => {
+        return { ...state, apiErrors: {...state.apiErrors, deleteCourse: "Check Your Connection!"} };
+      }
+    },
+    {
+      name: "addCourse",
+      method: "post",
+      endpoint: "students/courses/{id}",
+      trigger: students.ADD_COURSE,
+      success: students.ADD_COURSE_SUCCESS,
+      fail: students.ADD_COURSE_FAIL,
+      successMethod: (state, payload) => {
+        return { 
+          ...state, courses: [...state.courses, payload.data]
+        };
+      },
+      failMethod: (state, payload) => {
+        return { ...state, apiErrors: {...state.apiErrors, deleteCourse: "Check Your Connection!"} };
+      }
     }
-    
   ],
   departments:[
     {

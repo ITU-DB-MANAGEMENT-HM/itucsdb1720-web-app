@@ -1,7 +1,6 @@
 import React from "react";
 import {connect} from "react-redux"
-import {fetchStudentCourses, updateStudentDate, searchCourses}  from "../redux/actions/student"
-import {Card, Button, Spin} from "antd"
+import {fetchStudentCourses, updateStudentDate, searchCourses, deleteCourse, addCourse}  from "../redux/actions/student"
 
 import ProfileCard from "../components/profile-card"
 
@@ -9,9 +8,7 @@ class MainPage extends React.Component {
   state = {
     
   }
-  componentDidMount () {
-    this.props.dispatch(fetchStudentCourses());
-  }
+
   render = () => {
     if (!this.props.isLoggedIn) {
       return <div>Please log in!</div> 
@@ -19,10 +16,14 @@ class MainPage extends React.Component {
     const {user, fetchStudentIsLoading, updateStudentIsLoading, courses, searchCoursesData} = this.props;
     return <div>
       <ProfileCard user={user} courses={courses} searchCourses={searchCoursesData}
-        fetchStudentIsLoading={fetchStudentIsLoading} 
+        fetchStudentIsLoading={fetchStudentIsLoading}
         updateStudentIsLoading={updateStudentIsLoading}
         handleDateUpdate={(study_start, study_end) => {this.props.dispatch(updateStudentDate(study_start, study_end))}}
-        handleSearchCourse={value => this.props.dispatch(searchCourses(value))}/>
+        handleSearchCourse={value => this.props.dispatch(searchCourses(value))}
+        handleDeleteCourse={crn => this.props.dispatch(deleteCourse(crn))}
+        handleAddCourse={crn => this.props.dispatch(addCourse(crn))}
+        handleFetchStudentCourses={() => this.props.dispatch(fetchStudentCourses())}/>
+        
     </div>
   }
 }
