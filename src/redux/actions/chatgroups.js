@@ -6,8 +6,12 @@ export const getChatgroups = () => ({
     type: actionTypes.FETCH_CHATGROUPS
 })
 
-export const getMemberOfChatgroup = () => ({
-        type: actionTypes.FETCH_CHATGROUP_MEMBERS
+export const getMemberOfChatgroup = (cid) => ({
+        type: actionTypes.FETCH_CHATGROUP_MEMBERS,
+        params: {
+            id: cid
+        }
+        
     }
 )
 
@@ -16,7 +20,7 @@ export const createChatgroup = (item) => {
         type: actionTypes.CREATE_CHATGROUP,
         payload:{
             data: {
-                "name": item
+                "id": item
             }
         }
     }

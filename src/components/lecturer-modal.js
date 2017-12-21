@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Modal, Input, Form, Icon } from "antd";
-import { Menu, Dropdown, message } from 'antd';
 
 class LecturerModal extends Component {
   static state = {
@@ -23,7 +22,7 @@ class LecturerModal extends Component {
   
   isNumber = (rule, value, callback) => {
     let toCheck = parseInt(value, 10)
-    if(toCheck > 0 && value==toCheck && toCheck < 19)
+    if(toCheck > 0 && value == toCheck && toCheck < 19)
         callback()
     else
         callback("Please positive integers, we are not f00lz w00t")

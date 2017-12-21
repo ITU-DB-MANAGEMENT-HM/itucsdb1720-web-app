@@ -85,4 +85,4 @@ export const actions = {
   }
 };
 
-export const apiUrl = "http://881ce9ad.ngrok.io/";
+export const apiUrl = "https://itudbcs1720.herokuapp.com/";

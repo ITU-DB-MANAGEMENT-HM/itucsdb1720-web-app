@@ -34,7 +34,7 @@ class ProfileCard extends Component {
               style={{margin: "10px"}}
               ranges={{ Today: [moment(), moment()], 'This Month': [moment(), moment().endOf('month')] }}
               showTime
-              defaultValue={[moment(user.study_start), moment(user.study_end)]}
+              defaultValue={[moment(user.study_start || Date.now()), moment(user.study_end || Date.now())]}
               format="YYYY/MM/DD HH:mm:ss"
               onOk={dates => {
                 if (dates[0] && dates[1]) {

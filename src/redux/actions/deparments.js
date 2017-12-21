@@ -29,7 +29,7 @@ export const removeLecturer = (item) => {
     }
     
 }
-export const addLecturer = (item) => {
+export const addLecturer = (item) => {    
     console.log(item)
     return {
         type: actionTypes.ADD_LECTURER,

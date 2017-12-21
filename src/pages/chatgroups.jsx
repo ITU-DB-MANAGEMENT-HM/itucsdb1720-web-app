@@ -44,7 +44,7 @@ class Chatgroups extends React.Component{
     }
     onChange = (id) => {
         let cid = this.props.chatgroups[id].chatgroup_id
-        this.props.dispatch(getMemberOfChatgroup())
+        this.props.dispatch(getMemberOfChatgroup(cid))
         this.setState({activeKey: id})
     }
 

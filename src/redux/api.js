@@ -208,7 +208,7 @@ const api = {
   {
     // BIG TODO 
     method: "get",
-    endpoint: "api/chatgroups/46",
+    endpoint: "api/chatgroups/{id}",
     trigger: chatgroups.FETCH_CHATGROUP_MEMBERS,
     success: chatgroups.FETCH_CHATGROUP_MEMBERS_SUCCESS,
     fail: chatgroups.FETCH_CHATGROUP_MEMBERS_FAIL,
