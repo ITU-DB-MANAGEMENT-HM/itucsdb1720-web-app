@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Card, Button, DatePicker, Spin, Select} from "antd"
+import {Card, Button, DatePicker, Spin, Modal, Input} from "antd"
 import moment from "moment"
 
 import CourseTable from "./course-table"
@@ -10,9 +10,16 @@ class ProfileCard extends Component {
         study_end: null,
         date_err: "",
         selectedCourse: null,
+        addCourseModal: false,
+        courseSearchVal: ""
+    }
+    componentDidMount() {
+        this.props.handleSearchCourse();
+        this.props.handleFetchStudentCourses();
     }
     render = () => {
-        const {user, fetchStudentIsLoading, updateStudentIsLoading, handleDateUpdate, courses, searchCourses, handleSearchCourse} = this.props;
+        const {user, fetchStudentIsLoading, 
+            updateStudentIsLoading, handleDateUpdate, courses, searchCourses, handleSearchCourse, handleDeleteCourse, handleAddCourse} = this.props;
         return <Card title="Study Profile"  style={{ width: "50%" }}>
         {
           !fetchStudentIsLoading ? 
@@ -27,7 +34,7 @@ class ProfileCard extends Component {
               style={{margin: "10px"}}
               ranges={{ Today: [moment(), moment()], 'This Month': [moment(), moment().endOf('month')] }}
               showTime
-              defaultValue={[moment(user.study_start), moment(user.study_end)]}
+              defaultValue={[moment(user.study_start || Date.now()), moment(user.study_end || Date.now())]}
               format="YYYY/MM/DD HH:mm:ss"
               onOk={dates => {
                 if (dates[0] && dates[1]) {
@@ -50,24 +57,31 @@ class ProfileCard extends Component {
         }
         <hr/>
         <h2>Courses</h2>
-        <CourseTable courses={courses} handleCourseRemove={(c) => console.log(c)}/>
-        <Select
-          mode="combobox"
-          size={"large"}
-          onChange={(value, label) => {
-            console.log(value, label);
-          }}
-          onSearch={(value) => {
-            console.log(value)
-            handleSearchCourse(value);
-          }}
-          style={{ width: "100%" }}
-        >
-          {
-              searchCourses && searchCourses.map((sc) => <Select.Option key={sc.name}>{sc.name}</Select.Option>)
-          }
-        </Select>
-        <Button>Add Course</Button>
+        <CourseTable courses={courses} 
+            handleCourseAction={(item) => handleDeleteCourse(item.crn)} 
+            ActionComponent={(props) => <Button icon="delete" size={"small"} type="danger" ghost {...props}>Remove</Button>}/>
+
+            <Modal
+            visible={this.state.addCourseModal}
+            onOk={() => {console.log("addCourse")}}
+            okText="Add Course"
+            cancelText="cancel"
+            onCancel={() => this.setState({addCourseModal: false})}
+            width={"70vh"}
+            closable={false}>
+                <Input placeholder="Search" 
+                    onChange={(e) => this.setState({courseSearchVal: e.target.value})} 
+                    style={{width: "50%", margin: "10"}}/>
+                <Button icon="search" size={"small"} type="primary" 
+                onClick={() => handleSearchCourse(this.state.courseSearchVal)}>Search</Button>
+                <CourseTable courses={searchCourses} 
+                    handleCourseAction={(item) => handleAddCourse(item.crn)}
+                    ActionComponent={(props) => <Button icon="plus" size={"small"} type="primary" ghost {...props}>Add</Button>} />
+            </Modal>
+              
+          
+        
+        <Button onClick={() => this.setState({addCourseModal: true})}>Add Course</Button>
       </Card>
     }
 }
