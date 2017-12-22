@@ -1,6 +1,6 @@
 # ITUNDER WEBAPP
 
-write general description here
+Anonymous ITU student group finder, it is like tinder but for ITU study groups.
 
 ## Pages
 - [Main](docs/main.page.md)
